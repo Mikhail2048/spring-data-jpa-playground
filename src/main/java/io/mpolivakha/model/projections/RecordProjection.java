@@ -1,4 +1,4 @@
-package io.mpolivakha.model;
+package io.mpolivakha.model.projections;
 
 import java.math.BigDecimal;
 

@@ -1,9 +1,9 @@
 package io.mpolivakha.repository;
 
-import io.mpolivakha.model.ClassProjection;
-import io.mpolivakha.model.InterfaceProjection;
-import io.mpolivakha.model.Invoice;
-import io.mpolivakha.model.RecordProjection;
+import io.mpolivakha.model.projections.ClassProjection;
+import io.mpolivakha.model.projections.InterfaceProjection;
+import io.mpolivakha.model.projections.Invoice;
+import io.mpolivakha.model.projections.RecordProjection;
 import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package io.mpolivakha.model;
+package io.mpolivakha.model.projections;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

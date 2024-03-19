@@ -22,4 +22,69 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="2" author="mpolivakha">
+    <createTable tableName="users">
+      <column name="id" type="bigserial" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="text">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+    <createTable tableName="orders">
+      <column name="id" type="bigserial" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="type" type="text">
+        <constraints nullable="true"/>
+      </column>
+      <column name="due_to" type="timestamptz">
+        <constraints nullable="true"/>
+      </column>
+      <column name="user_id" type="bigserial">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <delete tableName="users"/>
+    <delete tableName="orders"/>
+
+    <insert tableName="users">
+      <column name="id">1</column>
+      <column name="name">Alex</column>
+    </insert>
+
+    <insert tableName="users">
+      <column name="id">2</column>
+      <column name="name">Bob</column>
+    </insert>
+
+    <insert tableName="orders">
+      <column name="type">ACTIVE</column>
+      <column name="due_to" valueComputed="CAST(NOW() + INTERVAL '10 days' AS TIMESTAMPTZ)"/>
+      <column name="user_id">1</column>
+    </insert>
+
+    <insert tableName="orders">
+      <column name="type">ACTIVE</column>
+      <column name="due_to" valueComputed="CAST(NOW() - INTERVAL '10 days' AS TIMESTAMPTZ)"/>
+      <column name="user_id">2</column>
+    </insert>
+
+    <insert tableName="orders">
+      <column name="type">STALE</column>
+      <column name="due_to" valueComputed="NOW()"/>
+      <column name="user_id">1</column>
+    </insert>
+  </changeSet>
+
+  <changeSet id="3" author="mpolivakha">
+    <createView
+      viewName="some_view"
+      fullDefinition="true">
+      CREATE OR REPLACE VIEW active_orders AS
+        SELECT o.id, o.type, o.due_to, o.user_id, u.name FROM orders o INNER JOIN users u ON o.user_id = u.id WHERE o.type = 'ACTIVE' AND o.due_to > NOW()
+    </createView>
+  </changeSet>
 </databaseChangeLog>
